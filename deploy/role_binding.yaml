@@ -1,0 +1,11 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: az-keyvault-secrets-operator
+subjects:
+- kind: ServiceAccount
+  name: az-keyvault-secrets-operator
+roleRef:
+  kind: Role
+  name: az-keyvault-secrets-operator
+  apiGroup: rbac.authorization.k8s.io

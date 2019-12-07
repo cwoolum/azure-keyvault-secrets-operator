@@ -67,7 +67,8 @@ RUN apt-get update \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* /go/src
 
-ADD https://github.com/operator-framework/operator-sdk/releases/download/v0.5.0/operator-sdk-v0.5.0-x86_64-linux-gnu /usr/bin/operator-sdk
+RUN mkdir /go/src && mkdir /go/src/az-keyvault-operator
+ADD https://github.com/operator-framework/operator-sdk/releases/download/v0.12.0/operator-sdk-v0.12.0-x86_64-linux-gnu /usr/bin/operator-sdk
 
 RUN chmod +x /usr/bin/operator-sdk
 
