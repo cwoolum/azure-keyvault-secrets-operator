@@ -77,6 +77,11 @@ func KeepResources() bool {
 	return keepResources
 }
 
+// GroupName is the name of the resource group the vault exists in
+func GroupName() string {
+	return groupName
+}
+
 // UserAgent specifies a string to append to the agent identifier.
 func UserAgent() string {
 	if len(userAgent) > 0 {
