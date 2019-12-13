@@ -3,8 +3,14 @@ module az-keyvault-secrets-operator
 go 1.13
 
 require (
+	github.com/Azure-Samples/azure-sdk-for-go-samples v0.0.0-20191120195555-12c9c66618db
+	github.com/Azure/azure-sdk-for-go v21.4.0+incompatible
+	github.com/Azure/go-autorest v11.1.2+incompatible
+	github.com/dimchansky/utfbom v1.1.0 // indirect
 	github.com/go-openapi/spec v0.19.0
+	github.com/marstr/randname v0.0.0-20181206212954-d5b0f288ab8c
 	github.com/operator-framework/operator-sdk v0.12.0
+	github.com/satori/go.uuid v1.2.0
 	github.com/spf13/pflag v1.0.3
 	k8s.io/api v0.0.0
 	k8s.io/apimachinery v0.0.0
