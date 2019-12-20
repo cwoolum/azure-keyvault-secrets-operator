@@ -44,28 +44,31 @@ spec:
               - client-secret
               type: object
             mappings:
+              description: Mappings are the mapping of Key Vault secrets to environment
+                variables
               items:
                 description: KeyVaultSecretBindingSpec defines the desired state of
                   KeyVaultMap
                 properties:
-                  environment-variable-mapping:
+                  environmentVariableMapping:
                     type: string
-                  secret-name:
+                  secretName:
                     type: string
                 required:
-                - environment-variable-mapping
-                - secret-name
+                - environmentVariableMapping
+                - secretName
                 type: object
               type: array
-            tenant-id:
+            tenantID:
               type: string
-            vault-name:
+            vaultName:
+              description: VaultName is the name of the vault to fetch secrets from
               type: string
           required:
           - credentials
           - mappings
-          - tenant-id
-          - vault-name
+          - tenantID
+          - vaultName
           type: object
         status:
           description: KeyVaultMapStatus defines the observed state of KeyVaultMap

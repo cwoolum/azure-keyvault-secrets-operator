@@ -14,10 +14,16 @@ type KeyVaultMapSpec struct {
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	// Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html
 
-	VaultName   string                      `json:"vault-name"`
-	TenantID    string                      `json:"tenant-id"`
-	Credentials KeyVaultCredentialsSpec     `json:"credentials"`
-	Mappings    []KeyVaultSecretBindingSpec `json:"mappings"`
+	// VaultName is the name of the vault to fetch secrets from
+	VaultName string `json:"vaultName"`
+
+	TenantID string `json:"tenantID"`
+
+	Credentials KeyVaultCredentialsSpec `json:"credentials"`
+
+	// Mappings are the mapping of Key Vault secrets to environment variables
+	// +listType=set
+	Mappings []KeyVaultSecretBindingSpec `json:"mappings"`
 }
 
 // KeyVaultCredentialsSpec defines the credentials to connect to a key
@@ -30,8 +36,8 @@ type KeyVaultCredentialsSpec struct {
 // KeyVaultSecretBindingSpec defines the desired state of KeyVaultMap
 // +k8s:openapi-gen=true
 type KeyVaultSecretBindingSpec struct {
-	SecretName                 string `json:"secret-name"`
-	EnvironmentVariableMapping string `json:"environment-variable-mapping"`
+	SecretName                 string `json:"secretName"`
+	EnvironmentVariableMapping string `json:"environmentVariableMapping"`
 }
 
 // KeyVaultMapStatus defines the observed state of KeyVaultMap

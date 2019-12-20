@@ -69,13 +69,14 @@ func schema_pkg_apis_keyvault_v1alpha1_KeyVaultMapSpec(ref common.ReferenceCallb
 				Description: "KeyVaultMapSpec defines the desired state of KeyVaultMap",
 				Type:        []string{"object"},
 				Properties: map[string]spec.Schema{
-					"vault-name": {
+					"vaultName": {
 						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
+							Description: "VaultName is the name of the vault to fetch secrets from",
+							Type:        []string{"string"},
+							Format:      "",
 						},
 					},
-					"tenant-id": {
+					"tenantID": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
 							Format: "",
@@ -87,8 +88,14 @@ func schema_pkg_apis_keyvault_v1alpha1_KeyVaultMapSpec(ref common.ReferenceCallb
 						},
 					},
 					"mappings": {
+						VendorExtensible: spec.VendorExtensible{
+							Extensions: spec.Extensions{
+								"x-kubernetes-list-type": "set",
+							},
+						},
 						SchemaProps: spec.SchemaProps{
-							Type: []string{"array"},
+							Description: "Mappings are the mapping of Key Vault secrets to environment variables",
+							Type:        []string{"array"},
 							Items: &spec.SchemaOrArray{
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
@@ -99,7 +106,7 @@ func schema_pkg_apis_keyvault_v1alpha1_KeyVaultMapSpec(ref common.ReferenceCallb
 						},
 					},
 				},
-				Required: []string{"vault-name", "tenant-id", "credentials", "mappings"},
+				Required: []string{"vaultName", "tenantID", "credentials", "mappings"},
 			},
 		},
 		Dependencies: []string{
@@ -125,20 +132,20 @@ func schema_pkg_apis_keyvault_v1alpha1_KeyVaultSecretBindingSpec(ref common.Refe
 				Description: "KeyVaultSecretBindingSpec defines the desired state of KeyVaultMap",
 				Type:        []string{"object"},
 				Properties: map[string]spec.Schema{
-					"secret-name": {
+					"secretName": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
 							Format: "",
 						},
 					},
-					"environment-variable-mapping": {
+					"environmentVariableMapping": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
 							Format: "",
 						},
 					},
 				},
-				Required: []string{"secret-name", "environment-variable-mapping"},
+				Required: []string{"secretName", "environmentVariableMapping"},
 			},
 		},
 	}

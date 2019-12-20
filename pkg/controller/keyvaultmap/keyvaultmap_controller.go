@@ -4,8 +4,8 @@ import (
 	"context"
 
 	keyvaultv1alpha1 "az-keyvault-secrets-operator/pkg/apis/keyvault/v1alpha1"
-	
-	"az-keyvault-secrets-operator/pkg/apis/keyvaultclient"
+
+	"az-keyvault-secrets-operator/pkg/keyvaultclient"
 
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
@@ -109,24 +109,46 @@ func (r *ReconcileKeyVaultMap) Reconcile(request reconcile.Request) (reconcile.R
 		return reconcile.Result{}, err
 	}
 
-	vault := GetVault(context.TODO(), instance.Spec.VaultName)
+	credentials := keyvaultclient.KeyVaultConfiguration{
+		TenantID:        instance.Spec.TenantID,
+		AADClientID:     instance.Spec.Credentials.ClientID,
+		AADClientSecret: instance.Spec.Credentials.ClientSecret,
+	}
 
-	
+	vault, err := credentials.GetKeyVaultClient()
+
+	vaultURL, urlErr := credentials.GetVaultURL()
+
+	if urlErr != nil {
+		return reconcile.Result{}, urlErr
+	}
+
+	vaultURLValue := *vaultURL
 
 	// Define a new Pod object
-	pod := newSecretForCR(instance)
+	secretResource := newSecretForCR(instance)
+
+	for _, secret := range instance.Spec.Mappings {
+		secretBundle, err := vault.GetSecret(context.TODO(), vaultURLValue, secret.SecretName, "")
+
+		if err != nil {
+			log.Error(err, "Unable to fetch secret.", "SecretName", secret.SecretName)
+		} else {
+			secretResource.StringData[secret.SecretName] = *secretBundle.Value
+		}
+	}
 
 	// Set KeyVaultMap instance as the owner and controller
-	if err := controllerutil.SetControllerReference(instance, pod, r.scheme); err != nil {
+	if err := controllerutil.SetControllerReference(instance, secretResource, r.scheme); err != nil {
 		return reconcile.Result{}, err
 	}
 
 	// Check if this Pod already exists
 	found := &corev1.Secret{}
-	err = r.client.Get(context.TODO(), types.NamespacedName{Name: pod.Name, Namespace: pod.Namespace}, found)
+	err = r.client.Get(context.TODO(), types.NamespacedName{Name: secretResource.Name, Namespace: secretResource.Namespace}, found)
 	if err != nil && errors.IsNotFound(err) {
-		reqLogger.Info("Creating a new Secret", "Secret.Namespace", pod.Namespace, "Secret.Name", pod.Name)
-		err = r.client.Create(context.TODO(), pod)
+		reqLogger.Info("Creating a new Secret", "Secret.Namespace", secretResource.Namespace, "Secret.Name", secretResource.Name)
+		err = r.client.Create(context.TODO(), secretResource)
 		if err != nil {
 			return reconcile.Result{}, err
 		}
@@ -149,7 +171,7 @@ func newSecretForCR(cr *keyvaultv1alpha1.KeyVaultMap) *corev1.Secret {
 	}
 	return &corev1.Secret{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      cr.Name + "-pod",
+			Name:      cr.Name + "-kv-secrets",
 			Namespace: cr.Namespace,
 			Labels:    labels,
 		},

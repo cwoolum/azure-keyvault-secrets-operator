@@ -8,8 +8,10 @@ require (
 	github.com/Azure/go-autorest v11.1.2+incompatible
 	github.com/dimchansky/utfbom v1.1.0 // indirect
 	github.com/go-openapi/spec v0.19.0
+	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
 	github.com/marstr/randname v0.0.0-20181206212954-d5b0f288ab8c
 	github.com/operator-framework/operator-sdk v0.12.0
+	github.com/pkg/errors v0.8.1
 	github.com/satori/go.uuid v1.2.0
 	github.com/spf13/pflag v1.0.3
 	k8s.io/api v0.0.0
