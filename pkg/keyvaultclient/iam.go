@@ -1,4 +1,4 @@
-package keyvaultmap
+package keyvaultclient
 
 import (
 	"fmt"

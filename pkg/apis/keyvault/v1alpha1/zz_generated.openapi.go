@@ -11,9 +11,10 @@ import (
 
 func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenAPIDefinition {
 	return map[string]common.OpenAPIDefinition{
-		"pkg/apis/keyvault/v1alpha1.KeyVaultMap":       schema_pkg_apis_keyvault_v1alpha1_KeyVaultMap(ref),
-		"pkg/apis/keyvault/v1alpha1.KeyVaultMapSpec":   schema_pkg_apis_keyvault_v1alpha1_KeyVaultMapSpec(ref),
-		"pkg/apis/keyvault/v1alpha1.KeyVaultMapStatus": schema_pkg_apis_keyvault_v1alpha1_KeyVaultMapStatus(ref),
+		"pkg/apis/keyvault/v1alpha1.KeyVaultMap":               schema_pkg_apis_keyvault_v1alpha1_KeyVaultMap(ref),
+		"pkg/apis/keyvault/v1alpha1.KeyVaultMapSpec":           schema_pkg_apis_keyvault_v1alpha1_KeyVaultMapSpec(ref),
+		"pkg/apis/keyvault/v1alpha1.KeyVaultMapStatus":         schema_pkg_apis_keyvault_v1alpha1_KeyVaultMapStatus(ref),
+		"pkg/apis/keyvault/v1alpha1.KeyVaultSecretBindingSpec": schema_pkg_apis_keyvault_v1alpha1_KeyVaultSecretBindingSpec(ref),
 	}
 }
 
@@ -67,8 +68,42 @@ func schema_pkg_apis_keyvault_v1alpha1_KeyVaultMapSpec(ref common.ReferenceCallb
 			SchemaProps: spec.SchemaProps{
 				Description: "KeyVaultMapSpec defines the desired state of KeyVaultMap",
 				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"vault-name": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"tenant-id": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"credentials": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("pkg/apis/keyvault/v1alpha1.KeyVaultCredentialsSpec"),
+						},
+					},
+					"mappings": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("pkg/apis/keyvault/v1alpha1.KeyVaultSecretBindingSpec"),
+									},
+								},
+							},
+						},
+					},
+				},
+				Required: []string{"vault-name", "tenant-id", "credentials", "mappings"},
 			},
 		},
+		Dependencies: []string{
+			"pkg/apis/keyvault/v1alpha1.KeyVaultCredentialsSpec", "pkg/apis/keyvault/v1alpha1.KeyVaultSecretBindingSpec"},
 	}
 }
 
@@ -78,6 +113,32 @@ func schema_pkg_apis_keyvault_v1alpha1_KeyVaultMapStatus(ref common.ReferenceCal
 			SchemaProps: spec.SchemaProps{
 				Description: "KeyVaultMapStatus defines the observed state of KeyVaultMap",
 				Type:        []string{"object"},
+			},
+		},
+	}
+}
+
+func schema_pkg_apis_keyvault_v1alpha1_KeyVaultSecretBindingSpec(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "KeyVaultSecretBindingSpec defines the desired state of KeyVaultMap",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"secret-name": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"environment-variable-mapping": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+				},
+				Required: []string{"secret-name", "environment-variable-mapping"},
 			},
 		},
 	}

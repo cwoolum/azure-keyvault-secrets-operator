@@ -14,8 +14,17 @@ type KeyVaultMapSpec struct {
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	// Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html
 
-	VaultName string                      `json:"vault-name"`
-	Mappings  []KeyVaultSecretBindingSpec `json:"mappings"`
+	VaultName   string                      `json:"vault-name"`
+	TenantID    string                      `json:"tenant-id"`
+	Credentials KeyVaultCredentialsSpec     `json:"credentials"`
+	Mappings    []KeyVaultSecretBindingSpec `json:"mappings"`
+}
+
+// KeyVaultCredentialsSpec defines the credentials to connect to a key
+// vault instance. This is used if not using managed identity.
+type KeyVaultCredentialsSpec struct {
+	ClientID     string `json:"client-id"`
+	ClientSecret string `json:"client-secret"`
 }
 
 // KeyVaultSecretBindingSpec defines the desired state of KeyVaultMap

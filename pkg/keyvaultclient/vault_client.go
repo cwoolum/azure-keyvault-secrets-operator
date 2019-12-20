@@ -1,15 +1,13 @@
-package keyvaultmap
+package keyvaultclient
 
 import (
 	"context"
-	"fmt"
-	"log"
 
-	"github.com/Azure/azure-sdk-for-go/services/keyvault/mgmt/2016-10-01/keyvault"	
+	"github.com/Azure/azure-sdk-for-go/services/keyvault/mgmt/2016-10-01/keyvault"
 )
 
-func getVaultsClient() keyvault.VaultsClient {
-	vaultsClient := keyvault.NewVaultsClient(SubscriptionID())
+func getVaultsClient(credentials KeyVaultCredentials) keyvault.VaultsClient {
+	vaultsClient := keyvault.NewVaultsClient(credentials.SubscriptionID)
 	a, _ := GetResourceManagementAuthorizer()
 	vaultsClient.Authorizer = a
 	vaultsClient.AddToUserAgent(UserAgent())

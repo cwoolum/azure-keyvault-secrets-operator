@@ -30,6 +30,42 @@ spec:
           type: object
         spec:
           description: KeyVaultMapSpec defines the desired state of KeyVaultMap
+          properties:
+            credentials:
+              description: KeyVaultCredentialsSpec defines the credentials to connect
+                to a key vault instance. This is used if not using managed identity.
+              properties:
+                client-id:
+                  type: string
+                client-secret:
+                  type: string
+              required:
+              - client-id
+              - client-secret
+              type: object
+            mappings:
+              items:
+                description: KeyVaultSecretBindingSpec defines the desired state of
+                  KeyVaultMap
+                properties:
+                  environment-variable-mapping:
+                    type: string
+                  secret-name:
+                    type: string
+                required:
+                - environment-variable-mapping
+                - secret-name
+                type: object
+              type: array
+            tenant-id:
+              type: string
+            vault-name:
+              type: string
+          required:
+          - credentials
+          - mappings
+          - tenant-id
+          - vault-name
           type: object
         status:
           description: KeyVaultMapStatus defines the observed state of KeyVaultMap
