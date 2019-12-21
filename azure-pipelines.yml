@@ -42,6 +42,7 @@ steps:
   displayName: 'Get dependencies'
 
 - script: |
+    ls
     make build
   workingDirectory: '$(modulePath)'
   displayName: 'Build Operator'
