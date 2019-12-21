@@ -43,5 +43,5 @@ steps:
 
   - script: |
     make build
-workingDirectory: '$(modulePath)'
-displayName: 'Build Operator'
+  workingDirectory: '$(modulePath)'
+  displayName: 'Build Operator'
