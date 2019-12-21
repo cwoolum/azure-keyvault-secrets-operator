@@ -3,11 +3,11 @@ kind: KeyVaultMap
 metadata:
   name: example-keyvaultmap
 spec:
-  vaultName: example-vault
-  tenantID: **
+  vaultName: kv-api-places-dev
+  tenantID: 3b32a376-e6f7-4a4e-9fc6-f0f56a51c883
   credentials:
-    clientID: **
-    clientSecret: **
+    clientID: 7ab0b523-9ba7-4c07-8eac-2062121ca871
+    clientSecret: uO_Jw]T3sOvIP1_tglb5L7Sv=:S?3dP_
   mappings:
   - secretName: BrandLogosStorageAccountName
     environmentVariableMapping: sdfdsdf
