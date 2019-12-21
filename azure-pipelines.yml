@@ -41,7 +41,7 @@ steps:
   workingDirectory: '$(modulePath)'
   displayName: 'Get dependencies'
 
-  - script: |
+- script: |
     make build
   workingDirectory: '$(modulePath)'
   displayName: 'Build Operator'
