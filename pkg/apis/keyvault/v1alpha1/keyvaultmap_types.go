@@ -29,8 +29,8 @@ type KeyVaultMapSpec struct {
 // KeyVaultCredentialsSpec defines the credentials to connect to a key
 // vault instance. This is used if not using managed identity.
 type KeyVaultCredentialsSpec struct {
-	ClientID     string `json:"client-id"`
-	ClientSecret string `json:"client-secret"`
+	ClientID     string `json:"clientID"`
+	ClientSecret string `json:"clientSecret"`
 }
 
 // KeyVaultSecretBindingSpec defines the desired state of KeyVaultMap

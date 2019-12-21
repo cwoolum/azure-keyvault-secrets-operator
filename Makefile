@@ -67,3 +67,10 @@ build-controller:
 generate-api:
 	$(GO_BUILD_VARS) operator-sdk generate k8s
 	$(GO_BUILD_VARS) operator-sdk generate openapi
+
+.PHONY: setup-debug-environment
+setup-debug-environment:
+	curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+	curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+	chmod +x ./kubectl
+	sudo mv ./kubectl /usr/local/bin/kubectl

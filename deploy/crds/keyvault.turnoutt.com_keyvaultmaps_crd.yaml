@@ -35,13 +35,13 @@ spec:
               description: KeyVaultCredentialsSpec defines the credentials to connect
                 to a key vault instance. This is used if not using managed identity.
               properties:
-                client-id:
+                clientID:
                   type: string
-                client-secret:
+                clientSecret:
                   type: string
               required:
-              - client-id
-              - client-secret
+              - clientID
+              - clientSecret
               type: object
             mappings:
               description: Mappings are the mapping of Key Vault secrets to environment

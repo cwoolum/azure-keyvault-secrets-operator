@@ -110,6 +110,7 @@ func (r *ReconcileKeyVaultMap) Reconcile(request reconcile.Request) (reconcile.R
 	}
 
 	credentials := keyvaultclient.KeyVaultConfiguration{
+		VaultName:       instance.Spec.VaultName,
 		TenantID:        instance.Spec.TenantID,
 		AADClientID:     instance.Spec.Credentials.ClientID,
 		AADClientSecret: instance.Spec.Credentials.ClientSecret,
@@ -170,10 +171,14 @@ func newSecretForCR(cr *keyvaultv1alpha1.KeyVaultMap) *corev1.Secret {
 		"app": cr.Name,
 	}
 	return &corev1.Secret{
+		TypeMeta: metav1.TypeMeta{APIVersion: corev1.SchemeGroupVersion.String()},
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      cr.Name + "-kv-secrets",
 			Namespace: cr.Namespace,
 			Labels:    labels,
 		},
+		Type:       corev1.SecretTypeOpaque,
+		Data:       map[string][]byte{},
+		StringData: map[string]string{},
 	}
 }

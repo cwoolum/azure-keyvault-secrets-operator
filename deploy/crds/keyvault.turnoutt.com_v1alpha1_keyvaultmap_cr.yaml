@@ -3,5 +3,11 @@ kind: KeyVaultMap
 metadata:
   name: example-keyvaultmap
 spec:
-  # Add fields here
-  size: 3
+  vaultName: example-vault
+  tenantID: **
+  credentials:
+    clientID: **
+    clientSecret: **
+  mappings:
+  - secretName: BrandLogosStorageAccountName
+    environmentVariableMapping: sdfdsdf
