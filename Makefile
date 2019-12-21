@@ -2,11 +2,10 @@
 # Variables                                      #
 ##################################################
 IMAGE_TAG      ?= master
-IMAGE_REGISTRY ?= docker.io
+IMAGE_REGISTRY ?= hub.docker.com
 IMAGE_REPO     ?= turnoutt
 
-IMAGE_CONTROLLER = $(IMAGE_REGISTRY)/$(IMAGE_REPO)/azure-keyvault-operator:$(IMAGE_TAG)
-IMAGE_ADAPTER    = $(IMAGE_REGISTRY)/$(IMAGE_REPO)/azure-keyvault-operator-metrics-adapter:$(IMAGE_TAG)
+IMAGE_CONTROLLER = $(IMAGE_REPO)/azure-keyvault-operator:$(IMAGE_TAG)
 
 
 ARCH       ?=amd64
@@ -47,7 +46,6 @@ e2e-test:
 ##################################################
 .PHONY: publish
 publish: build
-	docker push $(IMAGE_ADAPTER)
 	docker push $(IMAGE_CONTROLLER)
 
 ##################################################

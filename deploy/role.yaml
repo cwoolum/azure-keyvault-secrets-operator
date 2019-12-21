@@ -10,10 +10,7 @@ rules:
   - pods
   - services
   - services/finalizers
-  - endpoints
-  - persistentvolumeclaims
   - events
-  - configmaps
   - secrets
   verbs:
   - '*'
@@ -54,12 +51,6 @@ rules:
   - deployments
   verbs:
   - get
-- apiGroups:
-  - app.cwoolum.com
-  resources:
-  - '*'
-  verbs:
-  - '*'
 - apiGroups:
   - keyvault.turnoutt.com
   resources:
