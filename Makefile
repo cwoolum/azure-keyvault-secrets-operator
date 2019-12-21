@@ -59,7 +59,7 @@ build: build-controller
 .PHONY: build-controller
 build-controller: 
 	$(GO_BUILD_VARS) operator-sdk build $(IMAGE_CONTROLLER) \
-		--go-build-args "-ldflags -X=main.GitCommit=$(GIT_COMMIT) -o build/_output/bin/azure-keyvault-operator"
+		--go-build-args "-ldflags -X=main.GitCommit=$(GIT_COMMIT) -o build/_output/bin/azure-keyvault-operator" --verbose
 
 .PHONY: generate-api
 generate-api:
